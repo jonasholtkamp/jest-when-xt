@@ -1,0 +1,23 @@
+image: thatisnomoon-docker-local.jfrog.io/ambidexter/deployer:latest
+
+variables:
+  NPM_REPOSITORY: //thatisnomoon.jfrog.io/thatisnomoon/api/npm/npm-local/
+
+stages:
+  - test
+  - publish
+
+test:
+  stage: test
+  script:
+    - npm install
+    - npm run lint
+    - npm test
+  coverage: '/All files\s+\|\s+([\d.]+)/'
+
+publish:
+  stage: publish
+  script:
+    - npm --registry https:${NPM_REPOSITORY} publish
+  only:
+    - master
