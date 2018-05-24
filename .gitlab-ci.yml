@@ -5,6 +5,7 @@ variables:
 
 stages:
   - test
+  - code_quality
   - publish
 
 test:
@@ -14,6 +15,20 @@ test:
     - npm run lint
     - npm test
   coverage: '/All files\s+\|\s+([\d.]+)/'
+  artifacts:
+    paths:
+      - build
+
+codequality:
+  stage: code_quality
+  script:
+    - sonar-scanner
+        -Dsonar.login=$SONARQUBE_TOKEN
+        -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA
+        -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME
+        -Dsonar.gitlab.json_mode=CODECLIMATE
+        -Dsonar.gitlab.user_token=$SONARQUBES_GITLAB_ACCESS_TOKEN
+        -Dsonar.gitlab.project_id=$CI_PROJECT_ID
 
 publish:
   stage: publish

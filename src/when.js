@@ -1,58 +1,64 @@
 const utils = require('expect/build/jasmine_utils')
+const logger = require('./log')('when')
 
+const checkArgumentMatchers = (assertCall, args) => (match, matcher, i) => {
+  logger.debug(`matcher check, match: ${match}, index: ${i}`)
+
+  // Propagate failure to the end
+  if (!match) {
+    return false
+  }
+
+  const arg = args[i]
+
+  logger.debug(`   matcher: ${matcher}`)
+  logger.debug(`   arg: ${arg}`)
+
+  // Assert the match for better messaging during a failure
+  if (assertCall) {
+    expect(arg).toEqual(matcher)
+  }
+
+  return utils.equals(arg, matcher)
+}
 class WhenMock {
-  constructor (fn, debug) {
+  constructor (fn) {
     this.fn = fn
     this.callMocks = []
-    this.debug = debug
-    this.log = (...args) => this.debug && console.log(...args)
 
     const mockReturnValue = (matchers, assertCall, once = false) => (val) => {
       this.callMocks.push({ matchers, val, assertCall, once })
 
       this.fn.mockImplementation((...args) => {
-        this.log('mocked impl', args)
+        logger.debug('mocked impl', args)
 
         for (let i = 0; i < this.callMocks.length; i++) {
           const { matchers, val, assertCall } = this.callMocks[i]
-          const match = matchers.reduce((match, matcher, i) => {
-            this.log(`matcher check, match: ${match}, index: ${i}`)
-
-            // Propagate failure to the end
-            if (!match) {
-              return false
-            }
-
-            const arg = args[i]
-
-            this.log(`   matcher: ${matcher}`)
-            this.log(`   arg: ${arg}`)
-
-            // Assert the match for better messaging during a failure
-            if (assertCall) {
-              expect(arg).toEqual(matcher)
-            }
-
-            return utils.equals(arg, matcher)
-          }, true)
+          const match = matchers.reduce(checkArgumentMatchers(assertCall, args), true)
 
           if (match) {
             let removedOneItem = false
-            this.callMocks = this.callMocks.filter(mock => !(mock.once && utils.equals(mock.matchers, matchers) && !removedOneItem & (removedOneItem = true)))
+            this.callMocks = this.callMocks.filter(mock => {
+              if (mock.once && utils.equals(mock.matchers, matchers) && !removedOneItem) {
+                removedOneItem = true
+                return false
+              }
+              return true
+            })
             return val
           }
         }
       })
     }
 
-    const mockResolvedValueOnce = (matchers, assertCall) => (val) =>
-      mockReturnValueOnce(matchers, assertCall)(Promise.resolve(val))
+    const mockReturnValueOnce = (matchers, assertCall) => (val) =>
+      mockReturnValue(matchers, assertCall, true)(val)
 
     const mockResolvedValue = (matchers, assertCall) => (val) =>
       mockReturnValue(matchers, assertCall)(Promise.resolve(val))
 
-    const mockReturnValueOnce = (matchers, assertCall) => (val) =>
-      mockReturnValue(matchers, assertCall, true)(val)
+    const mockResolvedValueOnce = (matchers, assertCall) => (val) =>
+      mockReturnValueOnce(matchers, assertCall)(Promise.resolve(val))
 
     this.calledWith = (...matchers) => ({
       mockReturnValue: mockReturnValue(matchers, false),
@@ -70,9 +76,9 @@ class WhenMock {
   }
 }
 
-const when = (fn, { debug = false } = {}) => {
+const when = (fn) => {
   if (fn.__whenMock__ instanceof WhenMock) return fn.__whenMock__
-  fn.__whenMock__ = new WhenMock(fn, debug)
+  fn.__whenMock__ = new WhenMock(fn)
   return fn.__whenMock__
 }
 
