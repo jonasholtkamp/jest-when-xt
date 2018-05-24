@@ -7,7 +7,7 @@
 A fork from [jest-when](https://github.com/timkindberg/jest-when).
 
 ```
-npm i --save-dev jest-when-xt
+npm i --save-dev @thatisnomoon/jest-when-xt
 ```
 A sugary way to mock return values for specific arguments only.
 

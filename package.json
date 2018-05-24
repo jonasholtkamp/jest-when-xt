@@ -1,6 +1,6 @@
 {
   "name": "@thatisnomoon/jest-when-xt",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An extension lib for jest",
   "main": "src/when.js",
   "scripts": {
