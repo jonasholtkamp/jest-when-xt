@@ -1,0 +1,43 @@
+{
+  "name": "@thatisnomoon/jest-when-xt",
+  "version": "0.0.2",
+  "description": "An extension lib for jest",
+  "main": "./when.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint .",
+    "lint.fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/"
+  },
+  "contributors": [
+    "Jonas Holtkamp <jonas.holtkamp@senacor.com>"
+  ],
+  "dependencies": {
+    "expect": "^22.4.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^22.1.1",
+    "pre-commit": "^1.2.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "html",
+      "lcov",
+      "text"
+    ]
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
+}
