@@ -2,7 +2,7 @@
   "name": "@thatisnomoon/jest-when-xt",
   "version": "0.0.2",
   "description": "An extension lib for jest",
-  "main": "./when.js",
+  "main": "src/when.js",
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
@@ -16,6 +16,7 @@
     "Jonas Holtkamp <jonas.holtkamp@senacor.com>"
   ],
   "dependencies": {
+    "bunyan": "^1.8.12",
     "expect": "^22.4.3"
   },
   "devDependencies": {
@@ -30,10 +31,17 @@
   },
   "jest": {
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageDirectory": "build/reports/coverage/",
     "coverageReporters": [
       "html",
       "lcov",
       "text"
+    ],
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)"
     ]
   },
   "pre-commit": [

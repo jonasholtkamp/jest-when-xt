@@ -23,7 +23,6 @@ describe('When', () => {
 
       expect(whenFn).toBeInstanceOf(WhenMock)
       expect(whenFn.fn).toBe(fn)
-      expect(whenFn.debug).toBe(false)
     })
 
     it('returns existing WhenMock if fn was already whenified', () => {
@@ -77,19 +76,6 @@ describe('When', () => {
       expect(fn(1)).toEqual('x')
       expect(fn('foo', 'bar')).toEqual('y')
       expect(fn(false, /asdf/g)).toEqual('z')
-    })
-
-    it('should log if debug is enabled', () => {
-      const fn = jest.fn()
-      console.log = jest.fn()
-
-      const whenFn = when(fn, { debug: true })
-      whenFn.calledWith(1).mockReturnValue('x')
-
-      fn(1)
-
-      expect(whenFn.debug).toBeTruthy()
-      expect(console.log).toBeCalled()
     })
 
     it('returns a declared value repeatedly', () => {
