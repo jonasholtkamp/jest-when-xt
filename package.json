@@ -1,6 +1,6 @@
 {
   "name": "@thatisnomoon/jest-when-xt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An extension lib for jest",
   "main": "src/when.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "pre-commit": "^1.2.2"
   },
   "jest": {
+    "verbose": false,
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.js"
@@ -40,9 +41,7 @@
       "lcov",
       "text"
     ],
-    "testMatch": [
-      "**/?(*.)(spec|test).js?(x)"
-    ]
+    "testEnvironment": "node"
   },
   "pre-commit": [
     "lint",
