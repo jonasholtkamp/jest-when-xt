@@ -5,8 +5,9 @@
   "main": "src/when.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint .",
-    "lint.fix": "eslint . --fix"
+    "lint": "eslint src/",
+    "lint.fix": "eslint src/ --fix",
+    "stryker": "stryker run"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,12 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^22.1.1",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "stryker": "^0.24.0",
+    "stryker-api": "^0.17.1",
+    "stryker-html-reporter": "^0.14.1",
+    "stryker-javascript-mutator": "^0.7.1",
+    "stryker-jest-runner": "^0.7.0"
   },
   "jest": {
     "verbose": false,
@@ -41,7 +47,8 @@
       "lcov",
       "text"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "resetModules": true
   },
   "pre-commit": [
     "lint",

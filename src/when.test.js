@@ -1,11 +1,24 @@
+const { stringContaining } = expect
+
 const errMsg = ({ expect, actual }) =>
   new RegExp(`Expected.*\\n.*${expect}.*\\nReceived.*\\n.*${actual}`)
 
 describe('When', () => {
-  let spyEquals, when, WhenMock
+  let spyEquals, when, WhenMock, mockLogger
 
   beforeEach(() => {
     spyEquals = jest.spyOn(require('expect/build/jasmine_utils'), 'equals')
+
+    mockLogger = {
+      info: jest.fn(),
+      debug: jest.fn(),
+      warn: jest.fn(),
+      error: jest.fn(),
+      fatal: jest.fn(),
+      trace: jest.fn()
+    }
+
+    jest.mock('./log', () => () => mockLogger)
 
     when = require('./when').when
     WhenMock = require('./when').WhenMock
@@ -88,6 +101,16 @@ describe('When', () => {
       expect(fn(1)).toEqual('x')
     })
 
+    it('returns nothing if no declared value matches', () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith(1, 2).mockReturnValue('x')
+
+      expect(fn(5, 6)).toBeUndefined()
+      expect(mockLogger.debug).toBeCalledWith(stringContaining('matcher: 1'))
+      expect(mockLogger.debug).not.toBeCalledWith(stringContaining('matcher: 2'))
+    })
+
     it('expectCalledWith: fails a test with error messaging if argument does not match', () => {
       const fn1 = jest.fn()
       const fn2 = jest.fn()
@@ -104,10 +127,27 @@ describe('When', () => {
 
       when(fn).calledWith('foo').mockReturnValueOnce('bar')
       when(fn).calledWith('foo').mockReturnValueOnce('cbs')
+      when(fn).calledWith('extra training').mockReturnValueOnce(' for mutation test vs expectCalledWith')
 
       expect(fn('foo')).toEqual('bar')
       expect(fn('foo')).toEqual('cbs')
       expect(fn('foo')).toBeUndefined()
+    })
+
+    it('mockReturnValueOnce: works with expectCalledWith', done => {
+      const fn = jest.fn()
+
+      when(fn).expectCalledWith('foo').mockReturnValueOnce('bar')
+      when(fn).expectCalledWith('extra training').mockReturnValueOnce(' for mutation test vs expectCalledWith')
+
+      expect(fn('foo')).toEqual('bar')
+
+      try {
+        fn('for mutation test vs calledWith')
+      } catch (e) {
+        expect(e.message).toMatch(errMsg({ expect: 'extra training', actual: 'for mutation test vs calledWith' }))
+        done()
+      }
     })
 
     it('mockResolvedValue: should return a Promise', async () => {
@@ -115,19 +155,49 @@ describe('When', () => {
 
       when(fn).calledWith('foo').mockResolvedValue('bar')
 
-      // expect(fn('foo').then).toBe(Function())
+      expect(typeof fn('foo').then).toBe('function')
+      expect(await fn('mutation test vs expectCalledWith')).toBeUndefined()
+    })
+
+    it('mockResolvedValue: works with expectCalledWith', async done => {
+      const fn = jest.fn()
+
+      when(fn).expectCalledWith('foo').mockResolvedValue('bar')
+
       expect(await fn('foo')).toEqual('bar')
+
+      try {
+        await fn('for mutation test vs calledWith')
+      } catch (e) {
+        expect(e.message).toMatch(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
+        done()
+      }
     })
 
     it('mockResolvedValueOnce: should return a Promise only once', async () => {
       const fn = jest.fn()
 
       when(fn).calledWith('foo').mockResolvedValueOnce('bar')
-      when(fn).calledWith('foo').mockResolvedValueOnce('cbs')
+      when(fn).calledWith('foo').mockResolvedValueOnce('bar')
+      when(fn).calledWith('extra training').mockResolvedValueOnce(' for mutation test vs expectCalledWith')
 
-      // expect(fn('foo').then).toBe(Function())
+      expect(typeof fn('foo').then).toBe('function')
       expect(await fn('foo')).toEqual('bar')
-      expect(await fn('foo')).toEqual('cbs')
+      expect(await fn('foo')).toBeUndefined()
+    })
+
+    it('mockResolvedValueOnce: works with expectCalledWith', async done => {
+      const fn = jest.fn()
+
+      when(fn).expectCalledWith('foo').mockResolvedValueOnce('bar')
+
+      try {
+        await fn('for mutation test vs calledWith')
+      } catch (e) {
+        expect(e.message).toMatch(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
+        done()
+      }
+
       expect(await fn('foo')).toBeUndefined()
     })
   })
