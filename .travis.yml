@@ -12,10 +12,10 @@ script:
 - yarn run lint
 - yarn test
 
-deploy:
-  provider: npm
-  email: jonas.holtkamp@senacor.com
-  api_key: 6105bc89-c927-4183-a597-598d8ef6d4ff
-    secure: NNXTdcMBMoqyL1+ffmcYHayC63oi09JSusf7s9CO5pbcHen4J8cbCJrQ87NlAB7usRGMLXg0Twsldkw6DLMiNt9+Y0iOZFUeekzNFF64pC4HsLHs+uRTgtoS/9yR429BiZi7oj0GTV3785/GPglM6ECYhhFOlE7OkPLxrprGIQw5Qye9t9yECuxPntH9RX9rJsq11lSQLRSR6r8P24J8yzsXMjjxMBB0Yu9T2Ba0wI2gQ1HAtsA4USc4ldgsHJAmD3I+BEsAk0TN507cG+sn8ui+zSE0wuk6GXecQS8obSbaHdxJmJCH+A1A650aqIP/aOw3eyA5WLdo9a4X94K306602qivVhFjlbkILLq+hFb00dtnJgL6rHEFKxBuv8HCfvK2JNstVPP9qrdD+eEFGlRJ7BlAQmUiia/F4y6F6+KBlg4KPd9oVt6B7YTEDJ5GdzHuQCcaNsQakx8o8PEzwS4/zMs7rP7W2BR3/qmUazX+DKAOwYpi4PWwvbCN+WTUxe8ttrqGAiElrjPU7XI7B8gnGHkFfaPVwhBv1lrn0pXOPDhlvFJTJIoUdknTvOnoCPHU90zlMG9/lVlkIQFOW2EKJW6bArll4jwsgBO1Ki5ixhxGUll1PAapBi3KXO3puQigPQnMv/4RZKVSHlyHugVlKWShl3uVQ0u2yX82sDE=
-  on:
-    tags: true
+# deploy:
+#   provider: npm
+#   email: jonas.holtkamp@senacor.com
+#   api_key: 6105bc89-c927-4183-a597-598d8ef6d4ff
+#     secure: NNXTdcMBMoqyL1+ffmcYHayC63oi09JSusf7s9CO5pbcHen4J8cbCJrQ87NlAB7usRGMLXg0Twsldkw6DLMiNt9+Y0iOZFUeekzNFF64pC4HsLHs+uRTgtoS/9yR429BiZi7oj0GTV3785/GPglM6ECYhhFOlE7OkPLxrprGIQw5Qye9t9yECuxPntH9RX9rJsq11lSQLRSR6r8P24J8yzsXMjjxMBB0Yu9T2Ba0wI2gQ1HAtsA4USc4ldgsHJAmD3I+BEsAk0TN507cG+sn8ui+zSE0wuk6GXecQS8obSbaHdxJmJCH+A1A650aqIP/aOw3eyA5WLdo9a4X94K306602qivVhFjlbkILLq+hFb00dtnJgL6rHEFKxBuv8HCfvK2JNstVPP9qrdD+eEFGlRJ7BlAQmUiia/F4y6F6+KBlg4KPd9oVt6B7YTEDJ5GdzHuQCcaNsQakx8o8PEzwS4/zMs7rP7W2BR3/qmUazX+DKAOwYpi4PWwvbCN+WTUxe8ttrqGAiElrjPU7XI7B8gnGHkFfaPVwhBv1lrn0pXOPDhlvFJTJIoUdknTvOnoCPHU90zlMG9/lVlkIQFOW2EKJW6bArll4jwsgBO1Ki5ixhxGUll1PAapBi3KXO3puQigPQnMv/4RZKVSHlyHugVlKWShl3uVQ0u2yX82sDE=
+#   on:
+#     tags: true
