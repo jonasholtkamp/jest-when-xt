@@ -1,13 +1,12 @@
 # jest-when-xt
 
-[![pipeline status](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/badges/master/pipeline.svg)](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/commits/master)
-[![coverage report](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/badges/master/coverage.svg)](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/commits/master)
-[![quality gate](https://sonarqube.mgmt.thatisnomoon.io/api/badges/gate?key=jest-when-xt)](https://sonarqube.mgmt.thatisnomoon.io/dashboard?id=jest-when-xt)
+[![build status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt)
+[![codecov](https://codecov.io/gh/jonasholtkamp/jest-when-xt/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasholtkamp/jest-when-xt)
 
 A fork from [jest-when](https://github.com/timkindberg/jest-when).
 
 ```
-npm i --save-dev @thatisnomoon/jest-when-xt
+npm i --save-dev jest-when-xt
 ```
 A sugary way to mock return values for specific arguments only.
 
