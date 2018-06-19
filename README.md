@@ -1,7 +1,7 @@
 # jest-when-xt
 
-[![pipeline status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt/settings#)
-[![coverage report](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/badges/master/coverage.svg)](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/commits/master)
+[![build status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt)
+[![codecov](https://codecov.io/gh/jonasholtkamp/jest-when-xt/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasholtkamp/jest-when-xt)
 
 A fork from [jest-when](https://github.com/timkindberg/jest-when).
 
