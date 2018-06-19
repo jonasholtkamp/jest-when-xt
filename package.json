@@ -1,7 +1,8 @@
 {
-  "name": "@thatisnomoon/jest-when-xt",
+  "name": "jest-when-xt",
   "version": "0.0.6",
   "description": "An extension lib for jest",
+  "license": "MIT",
   "main": "src/when.js",
   "scripts": {
     "test": "jest",
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/"
+    "url": "https://github.com/jonasholtkamp/jest-when-xt/"
   },
   "contributors": [
     "Jonas Holtkamp <jonas.holtkamp@senacor.com>"
