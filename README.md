@@ -1,5 +1,8 @@
 # jest-when-xt
 
+[![pipeline status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt/settings#)
+[![coverage report](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/badges/master/coverage.svg)](https://gitlab.thatisnomoon.io/timeline-troopers/jest-when-xt/commits/master)
+
 A fork from [jest-when](https://github.com/timkindberg/jest-when).
 
 ```
