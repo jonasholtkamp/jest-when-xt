@@ -5,10 +5,39 @@
 
 A fork from [jest-when](https://github.com/timkindberg/jest-when).
 
+An extended, sugary way to mock return values for specific arguments only
+
+### Features
+`jest-when-xt` allows you to use a set of the original 
+[Jest mock functions](https://facebook.github.io/jest/docs/en/mock-function-api) in order to train 
+your mocks only based on parameters your mocked function is called with.
+
+An example statement would be as follows:
+
+```javascript
+when(fn).calledWith(1).mockReturnValue('yay!')
 ```
+
+The trained mock function `fn` will now behave as follows -- assumed no other trainings took place:
+* return `yay!` if called with `1` _as first parameter_
+* return `undefined` if called with _any other first parameter_ than `1`
+
+For extended usage see the examples below.
+
+The supported set of mock functions is:
+* `mockReturnValue`
+* `mockReturnValueOnce`
+* `mockResolvedValue`
+* `mockResolvedValueOnce`
+* `mockRejectedValue`
+* `mockRejectedValueOnce`
+
+### Usage
+
+#### Installation
+```bash
 npm i --save-dev jest-when-xt
 ```
-A sugary way to mock return values for specific arguments only.
 
 #### Basic usage:
 ```javascript
@@ -17,26 +46,19 @@ import { when } from 'jest-when-xt'
 const fn = jest.fn()
 when(fn).calledWith(1).mockReturnValue('yay!')
 
-const result = fn(1)
-expect(result).toEqual('yay!')
+expect(fn(1)).toEqual('yay!')
 ```
 
-#### Supports multiple args:
+#### Supports multiple args with partial argument matching:
 ```javascript
-import { when } from 'jest-when-xt'
+when(fn).calledWith(1, true).mockReturnValue('yay!')
 
-const fn = jest.fn()
-when(fn).calledWith(1, true, 'foo').mockReturnValue('yay!')
-
-const result = fn(1, true, 'foo')
-expect(result).toEqual('yay!')
+expect(fn(1, true)).toEqual('yay!')
+expect(fn(1, true, 'foo')).toEqual('yay!')
 ```
 
 #### Supports training for single calls
 ```javascript
-import { when } from 'jest-when-xt'
-
-const fn = jest.fn()
 when(fn).calledWith(1, true, 'foo').mockReturnValueOnce('yay!')
 when(fn).calledWith(1, true, 'foo').mockReturnValueOnce('nay!')
 
@@ -45,26 +67,30 @@ expect(fn(1, true, 'foo')).toEqual('nay!')
 expect(fn(1, true, 'foo')).toBeUndefined()
 ```
 
-#### Supports Promises
+#### Supports Promises, both resolved and rejected
 ```javascript
-import { when } from 'jest-when-xt'
+when(fn).calledWith(1).mockResolvedValue('yay!')
+when(fn).calledWith(2).mockResolvedValueOnce('nay!')
 
-const fn = jest.fn()
-when(fn).calledWith(1, true, 'foo').mockResolvedValue('yay!')
-when(fn).calledWith(2, false, 'bar').mockResolvedValueOnce('nay!')
+await expect(fn(1)).resolves.toEqual('yay!')
+await expect(fn(1)).resolves.toEqual('yay!')
 
-expect(await fn(1, true, 'foo')).toEqual('yay!')
-expect(await fn(1, true, 'foo')).toEqual('yay!')
+await expect(fn(2)).resolves.toEqual('nay!')
+expect(await fn(2)).toBeUndefined()
 
-expect(await fn(2, false, 'bar')).toEqual('nay!')
-expect(await fn(2, false, 'bar')).toBeUndefined()
+
+when(fn).calledWith(3).mockRejectedValue(new Error('oh no!'))
+when(fn).calledWith(4).mockRejectedValueOnce(new Error('oh no, an error again!'))
+
+await expect(fn(3)).rejects.toThrow('oh no!')
+await expect(fn(3)).rejects.toThrow('oh no!')
+
+await expect(fn(4)).rejects.toThrow('oh no, an error again!')
+expect(await fn(4)).toBeUndefined()
 ```
 
 #### Supports jest matchers:
 ```javascript
-import { when } from 'jest-when-xt'
-
-const fn = jest.fn()
 when(fn).calledWith(
   expect.anything(),
   expect.any(Number),
@@ -77,9 +103,6 @@ expect(result).toEqual('yay!')
 
 #### Supports compound declarations:
 ```javascript
-import { when } from 'jest-when-xt'
-
-const fn = jest.fn()
 when(fn).calledWith(1).mockReturnValue('no')
 when(fn).calledWith(2).mockReturnValue('way?')
 when(fn).calledWith(3).mockReturnValue('yes')
@@ -94,13 +117,13 @@ expect(fn(5)).toEqual(undefined)
 
 #### Assert the args:
 
-Use `expectCalledWith` instead to run an assertion that the `fn` was called with the provided args. Your test will fail if the jest mock function is ever called without those exact `expectCalledWith` params.
+Use `expectCalledWith` instead to run an assertion that the `fn` was called with the provided 
+args. Your test will fail if the jest mock function is ever called without those exact 
+`expectCalledWith` params.
 
-Disclaimer: This won't really work very well with compound declarations, because one of them will always fail, and throw an assertion error.
+Disclaimer: This won't really work very well with compound declarations, because one of them will 
+always fail, and throw an assertion error.
 ```javascript
-import { when } from 'jest-when-xt'
-
-const fn = jest.fn()
 when(fn).expectCalledWith(1).mockReturnValue('x')
 
 fn(2); // Will throw a helpful jest assertion error with args diff

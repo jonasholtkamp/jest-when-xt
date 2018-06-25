@@ -51,28 +51,18 @@ class WhenMock {
       })
     }
 
-    const mockReturnValueOnce = (matchers, assertCall) => (val) =>
-      mockReturnValue(matchers, assertCall, true)(val)
-
-    const mockResolvedValue = (matchers, assertCall) => (val) =>
-      mockReturnValue(matchers, assertCall)(Promise.resolve(val))
-
-    const mockResolvedValueOnce = (matchers, assertCall) => (val) =>
-      mockReturnValueOnce(matchers, assertCall)(Promise.resolve(val))
-
-    this.calledWith = (...matchers) => ({
-      mockReturnValue: mockReturnValue(matchers, false),
-      mockReturnValueOnce: mockReturnValueOnce(matchers, false),
-      mockResolvedValue: mockResolvedValue(matchers, false),
-      mockResolvedValueOnce: mockResolvedValueOnce(matchers, false)
+    const mockFunctions = (matchers, assertCall) => ({
+      mockReturnValue: val => mockReturnValue(matchers, assertCall)(val),
+      mockReturnValueOnce: val => mockReturnValue(matchers, assertCall, true)(val),
+      mockResolvedValue: val => mockReturnValue(matchers, assertCall)(Promise.resolve(val)),
+      mockResolvedValueOnce: val => mockReturnValue(matchers, assertCall, true)(Promise.resolve(val)),
+      mockRejectedValue: err => mockReturnValue(matchers, assertCall)(Promise.reject(err)),
+      mockRejectedValueOnce: err => mockReturnValue(matchers, assertCall, true)(Promise.reject(err))
     })
 
-    this.expectCalledWith = (...matchers) => ({
-      mockReturnValue: mockReturnValue(matchers, true),
-      mockReturnValueOnce: mockReturnValueOnce(matchers, true),
-      mockResolvedValue: mockResolvedValue(matchers, true),
-      mockResolvedValueOnce: mockResolvedValueOnce(matchers, true)
-    })
+    this.calledWith = (...matchers) => ({ ...mockFunctions(matchers, false) })
+
+    this.expectCalledWith = (...matchers) => ({ ...mockFunctions(matchers, true) })
   }
 }
 

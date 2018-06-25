@@ -134,20 +134,14 @@ describe('When', () => {
       expect(fn('foo')).toBeUndefined()
     })
 
-    it('mockReturnValueOnce: works with expectCalledWith', done => {
+    it('mockReturnValueOnce: works with expectCalledWith', () => {
       const fn = jest.fn()
 
       when(fn).expectCalledWith('foo').mockReturnValueOnce('bar')
       when(fn).expectCalledWith('extra training').mockReturnValueOnce(' for mutation test vs expectCalledWith')
 
       expect(fn('foo')).toEqual('bar')
-
-      try {
-        fn('for mutation test vs calledWith')
-      } catch (e) {
-        expect(e.message).toMatch(errMsg({ expect: 'extra training', actual: 'for mutation test vs calledWith' }))
-        done()
-      }
+      expect(() => fn('for mutation test vs calledWith')).toThrow(errMsg({ expect: 'extra training', actual: 'for mutation test vs calledWith' }))
     })
 
     it('mockResolvedValue: should return a Promise', async () => {
@@ -156,22 +150,17 @@ describe('When', () => {
       when(fn).calledWith('foo').mockResolvedValue('bar')
 
       expect(typeof fn('foo').then).toBe('function')
+      await expect(fn('foo')).resolves.toEqual('bar')
       expect(await fn('mutation test vs expectCalledWith')).toBeUndefined()
     })
 
-    it('mockResolvedValue: works with expectCalledWith', async done => {
+    it('mockResolvedValue: works with expectCalledWith', async () => {
       const fn = jest.fn()
 
       when(fn).expectCalledWith('foo').mockResolvedValue('bar')
 
-      expect(await fn('foo')).toEqual('bar')
-
-      try {
-        await fn('for mutation test vs calledWith')
-      } catch (e) {
-        expect(e.message).toMatch(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
-        done()
-      }
+      await expect(fn('foo')).resolves.toEqual('bar')
+      expect(() => fn('for mutation test vs calledWith')).toThrow(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
     })
 
     it('mockResolvedValueOnce: should return a Promise only once', async () => {
@@ -182,22 +171,58 @@ describe('When', () => {
       when(fn).calledWith('extra training').mockResolvedValueOnce(' for mutation test vs expectCalledWith')
 
       expect(typeof fn('foo').then).toBe('function')
-      expect(await fn('foo')).toEqual('bar')
+      await expect(fn('foo')).resolves.toEqual('bar')
       expect(await fn('foo')).toBeUndefined()
     })
 
-    it('mockResolvedValueOnce: works with expectCalledWith', async done => {
+    it('mockResolvedValueOnce: works with expectCalledWith', async () => {
       const fn = jest.fn()
 
       when(fn).expectCalledWith('foo').mockResolvedValueOnce('bar')
 
-      try {
-        await fn('for mutation test vs calledWith')
-      } catch (e) {
-        expect(e.message).toMatch(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
-        done()
-      }
+      expect(() => fn('for mutation test vs calledWith')).toThrow(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
+      await expect(fn('foo')).resolves.toEqual('bar')
+      expect(await fn('foo')).toBeUndefined()
+    })
 
+    it('mockRejectedValue: should return a rejected Promise', async () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockRejectedValue(new Error('bar'))
+
+      expect(typeof fn('foo').then).toBe('function')
+      await expect(fn('foo')).rejects.toThrow('bar')
+      expect(await fn('mutation test vs expectCalledWith')).toBeUndefined()
+    })
+
+    it('mockRejectedValue: works with expectCalledWith', async () => {
+      const fn = jest.fn()
+
+      when(fn).expectCalledWith('foo').mockRejectedValue(new Error('bar'))
+
+      await expect(fn('foo')).rejects.toThrow('bar')
+      expect(() => fn('for mutation test vs calledWith')).toThrow(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
+    })
+
+    it('mockRejectedValueOnce: should return a rejected Promise only once', async () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockRejectedValueOnce(new Error('bar'))
+      when(fn).calledWith('foo').mockRejectedValueOnce(new Error('bar'))
+      when(fn).calledWith('extra training').mockRejectedValueOnce(' for mutation test vs expectCalledWith')
+
+      expect(typeof fn('foo').then).toBe('function')
+      await expect(fn('foo')).rejects.toThrow('bar')
+      expect(await fn('foo')).toBeUndefined()
+    })
+
+    it('mockRejectedValueOnce: works with expectCalledWith', async () => {
+      const fn = jest.fn()
+
+      when(fn).expectCalledWith('foo').mockRejectedValueOnce(new Error('bar'))
+
+      expect(() => fn('for mutation test vs calledWith')).toThrow(errMsg({ expect: 'foo', actual: 'for mutation test vs calledWith' }))
+      await expect(fn('foo')).rejects.toThrow('bar')
       expect(await fn('foo')).toBeUndefined()
     })
   })
