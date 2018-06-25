@@ -3,7 +3,7 @@
 [![build status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt)
 [![codecov](https://codecov.io/gh/jonasholtkamp/jest-when-xt/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasholtkamp/jest-when-xt)
 
-A fork from [jest-when](https://github.com/timkindberg/jest-when).
+A fork from @timkindberg's [jest-when](https://github.com/timkindberg/jest-when).
 
 ```
 npm i --save-dev jest-when-xt
@@ -20,6 +20,30 @@ when(fn).calledWith(1).mockReturnValue('yay!')
 const result = fn(1)
 expect(result).toEqual('yay!')
 ```
+
+#### Supports chaining of mock trainings:
+```javascript
+when(fn)
+  .calledWith(1, true).mockReturnValue('yay!')
+  .calledWith(2, false).mockReturnValue('nay!')
+
+expect(fn(1, true)).toEqual('yay!')
+expect(fn(2, false)).toEqual('nay!')
+```
+Thanks to @kernelkiller.
+
+#### Supports replacement of mock trainings:
+```javascript
+when(fn).calledWith(1, true).mockReturnValue('yay!')
+expect(fn(1, true)).toEqual('yay!')
+
+when(fn).calledWith(2, false).mockReturnValue('nay!')
+expect(fn(2, false)).toEqual('nay!')
+```
+This replacement of the training does only happen for mock functions _not_ ending in `*Once`. 
+Trainings like `mockReturnValueOnce` are removed after a matching function call anyway.
+
+Thanks to @kernelkiller.
 
 #### Supports multiple args:
 ```javascript
@@ -106,3 +130,6 @@ when(fn).expectCalledWith(1).mockReturnValue('x')
 fn(2); // Will throw a helpful jest assertion error with args diff
 ```
 
+### Contributors
+* @timkindberg (original author)
+* @kernelkiller
