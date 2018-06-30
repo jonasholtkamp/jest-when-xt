@@ -23,27 +23,33 @@ expect(result).toEqual('yay!')
 
 #### Supports chaining of mock trainings:
 ```javascript
-when(fn)
-  .calledWith(1, true).mockReturnValue('yay!')
-  .calledWith(2, false).mockReturnValue('nay!')
+import { when } from 'jest-when-xt'
 
-expect(fn(1, true)).toEqual('yay!')
-expect(fn(2, false)).toEqual('nay!')
+const fn = jest.fn()
+when(fn)
+  .calledWith(1).mockReturnValue('yay!')
+  .calledWith(2).mockReturnValue('nay!')
+
+expect(fn(1)).toEqual('yay!')
+expect(fn(2)).toEqual('nay!')
 ```
-Thanks to @kernelkiller.
+Thanks to @fkloes.
 
 #### Supports replacement of mock trainings:
 ```javascript
-when(fn).calledWith(1, true).mockReturnValue('yay!')
-expect(fn(1, true)).toEqual('yay!')
+import { when } from 'jest-when-xt'
 
-when(fn).calledWith(2, false).mockReturnValue('nay!')
-expect(fn(2, false)).toEqual('nay!')
+const fn = jest.fn()
+when(fn).calledWith(1).mockReturnValue('yay!')
+expect(fn(1)).toEqual('yay!')
+
+when(fn).calledWith(1).mockReturnValue('nay!')
+expect(fn(1)).toEqual('nay!')
 ```
 This replacement of the training does only happen for mock functions _not_ ending in `*Once`. 
 Trainings like `mockReturnValueOnce` are removed after a matching function call anyway.
 
-Thanks to @kernelkiller.
+Thanks to @fkloes.
 
 #### Supports multiple args:
 ```javascript
@@ -132,4 +138,4 @@ fn(2); // Will throw a helpful jest assertion error with args diff
 
 ### Contributors
 * @timkindberg (original author)
-* @kernelkiller
+* @fkloes
