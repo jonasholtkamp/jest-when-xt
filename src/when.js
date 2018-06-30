@@ -27,10 +27,13 @@ class WhenMock {
     this.callMocks = []
 
     const mockReturnValue = (matchers, assertCall, once = false) => (val) => {
-      // Remove call mocks with equal matchers to enable dynamic replacement during a test
+      // To enable dynamic replacement during a test:
+      // * call mocks with equal matchers are removed
+      // * `once` mocks are used prioritized
       this.callMocks = this.callMocks
         .filter((callMock) => once || !utils.equals(callMock.matchers, matchers))
         .concat({ matchers, val, assertCall, once })
+        .sort(({ once }) => !once ? 1 : 0)
 
       this.fn.mockImplementation((...args) => {
         logger.debug('mocked impl', args)

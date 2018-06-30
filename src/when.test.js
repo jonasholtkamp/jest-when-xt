@@ -163,6 +163,18 @@ describe('When', () => {
       expect(fn('foo')).toBeUndefined()
     })
 
+    it('mockReturnValueOnce: should return specified value only once and the regular value after that', () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockReturnValue('bar')
+      expect(fn('foo')).toEqual('bar')
+
+      when(fn).calledWith('foo').mockReturnValueOnce('cbs')
+      expect(fn('foo')).toEqual('cbs')
+
+      expect(fn('foo')).toEqual('bar')
+    })
+
     it('mockReturnValueOnce: works with expectCalledWith', done => {
       const fn = jest.fn()
 
@@ -213,6 +225,18 @@ describe('When', () => {
       expect(typeof fn('foo').then).toBe('function')
       expect(await fn('foo')).toEqual('bar')
       expect(await fn('foo')).toBeUndefined()
+    })
+
+    it('mockResolvedValueOnce: should return specified value only once and the regular value after that', async () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockResolvedValue('bar')
+      expect(await fn('foo')).toEqual('bar')
+
+      when(fn).calledWith('foo').mockResolvedValueOnce('cbs')
+      expect(await fn('foo')).toEqual('cbs')
+
+      expect(await fn('foo')).toEqual('bar')
     })
 
     it('mockResolvedValueOnce: works with expectCalledWith', async done => {
