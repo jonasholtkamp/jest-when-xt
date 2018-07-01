@@ -91,6 +91,35 @@ describe('When', () => {
       expect(fn(false, /asdf/g)).toEqual('z')
     })
 
+    it('supports chaining of when declarations', () => {
+      const fn = jest.fn()
+
+      const result = when(fn)
+        .calledWith(1)
+        .mockReturnValue('x')
+
+      expect(result).toBeInstanceOf(WhenMock)
+
+      when(fn).calledWith('foo', 'bar')
+        .mockReturnValue('y')
+        .calledWith(false, /asdf/g)
+        .mockReturnValue('z')
+
+      expect(fn(1)).toEqual('x')
+      expect(fn('foo', 'bar')).toEqual('y')
+      expect(fn(false, /asdf/g)).toEqual('z')
+    })
+
+    it('supports replacement of when declarations', () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo', 'bar').mockReturnValue('x')
+      when(fn).calledWith(false, /asdf/g).mockReturnValue('y')
+      when(fn).calledWith('foo', 'bar').mockReturnValue('z')
+
+      expect(fn('foo', 'bar')).toEqual('z')
+    })
+
     it('returns a declared value repeatedly', () => {
       const fn = jest.fn()
 
@@ -132,6 +161,18 @@ describe('When', () => {
       expect(fn('foo')).toEqual('bar')
       expect(fn('foo')).toEqual('cbs')
       expect(fn('foo')).toBeUndefined()
+    })
+
+    it('mockReturnValueOnce: should return specified value only once and the regular value after that', () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockReturnValue('bar')
+      expect(fn('foo')).toEqual('bar')
+
+      when(fn).calledWith('foo').mockReturnValueOnce('cbs')
+      expect(fn('foo')).toEqual('cbs')
+
+      expect(fn('foo')).toEqual('bar')
     })
 
     it('mockReturnValueOnce: works with expectCalledWith', done => {
@@ -184,6 +225,18 @@ describe('When', () => {
       expect(typeof fn('foo').then).toBe('function')
       expect(await fn('foo')).toEqual('bar')
       expect(await fn('foo')).toBeUndefined()
+    })
+
+    it('mockResolvedValueOnce: should return specified value only once and the regular value after that', async () => {
+      const fn = jest.fn()
+
+      when(fn).calledWith('foo').mockResolvedValue('bar')
+      expect(await fn('foo')).toEqual('bar')
+
+      when(fn).calledWith('foo').mockResolvedValueOnce('cbs')
+      expect(await fn('foo')).toEqual('cbs')
+
+      expect(await fn('foo')).toEqual('bar')
     })
 
     it('mockResolvedValueOnce: works with expectCalledWith', async done => {
