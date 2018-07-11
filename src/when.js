@@ -31,7 +31,7 @@ class WhenMock {
       // * call mocks with equal matchers are removed
       // * `once` mocks are used prioritized
       this.callMocks = this.callMocks
-        .filter((callMock) => once || !utils.equals(callMock.matchers, matchers))
+        .filter((callMock) => once || callMock.once || !utils.equals(callMock.matchers, matchers))
         .concat({ matchers, val, assertCall, once })
         .sort(({ once }) => !once ? 1 : 0)
 
@@ -56,7 +56,10 @@ class WhenMock {
         }
       })
 
-      return this
+      return {
+        ...this,
+        ...mockFunctions(matchers, assertCall)
+      }
     }
 
     const mockFunctions = (matchers, assertCall) => ({

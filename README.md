@@ -8,8 +8,8 @@ A fork from @timkindberg's [jest-when](https://github.com/timkindberg/jest-when)
 An extended, sugary way to mock return values for specific arguments only
 
 ### Features
-`jest-when-xt` allows you to use a set of the original 
-[Jest mock functions](https://facebook.github.io/jest/docs/en/mock-function-api) in order to train 
+`jest-when-xt` allows you to use a set of the original
+[Jest mock functions](https://facebook.github.io/jest/docs/en/mock-function-api) in order to train
 your mocks only based on parameters your mocked function is called with.
 
 An example statement would be as follows:
@@ -60,6 +60,16 @@ expect(fn(2)).toEqual('nay!')
 ```
 Thanks to @fkloes.
 
+```javascript
+when(fn)
+  .calledWith(1)
+  .mockReturnValueOnce('yay!')
+  .mockReturnValue('nay!')
+
+expect(fn(1)).toEqual('yay!')
+expect(fn(1)).toEqual('nay!')
+```
+
 #### Supports replacement of mock trainings:
 ```javascript
 when(fn).calledWith(1).mockReturnValue('yay!')
@@ -68,7 +78,7 @@ expect(fn(1)).toEqual('yay!')
 when(fn).calledWith(1).mockReturnValue('nay!')
 expect(fn(1)).toEqual('nay!')
 ```
-This replacement of the training does only happen for mock functions _not_ ending in `*Once`. 
+This replacement of the training does only happen for mock functions _not_ ending in `*Once`.
 Trainings like `mockReturnValueOnce` are removed after a matching function call anyway.
 
 Thanks to @fkloes.
@@ -141,11 +151,11 @@ expect(fn(5)).toEqual(undefined)
 
 #### Assert the args:
 
-Use `expectCalledWith` instead to run an assertion that the `fn` was called with the provided 
-args. Your test will fail if the jest mock function is ever called without those exact 
+Use `expectCalledWith` instead to run an assertion that the `fn` was called with the provided
+args. Your test will fail if the jest mock function is ever called without those exact
 `expectCalledWith` params.
 
-Disclaimer: This won't really work very well with compound declarations, because one of them will 
+Disclaimer: This won't really work very well with compound declarations, because one of them will
 always fail, and throw an assertion error.
 ```javascript
 when(fn).expectCalledWith(1).mockReturnValue('x')
