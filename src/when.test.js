@@ -94,11 +94,9 @@ describe('When', () => {
     it('supports chaining of when declarations', () => {
       const fn = jest.fn()
 
-      const result = when(fn)
+      when(fn)
         .calledWith(1)
         .mockReturnValue('x')
-
-      expect(result).toBeInstanceOf(WhenMock)
 
       when(fn).calledWith('foo', 'bar')
         .mockReturnValue('y')
@@ -124,10 +122,13 @@ describe('When', () => {
       const fn = jest.fn()
 
       when(fn).calledWith(1).mockReturnValue('x')
+      when(fn).calledWith(2).mockReturnValueOnce('x').mockReturnValue('y')
 
       expect(fn(1)).toEqual('x')
       expect(fn(1)).toEqual('x')
       expect(fn(1)).toEqual('x')
+      expect(fn(2)).toEqual('x')
+      expect(fn(2)).toEqual('y')
     })
 
     it('returns nothing if no declared value matches', () => {
