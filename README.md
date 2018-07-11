@@ -2,8 +2,10 @@
 
 [![build status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt)
 [![codecov](https://codecov.io/gh/jonasholtkamp/jest-when-xt/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasholtkamp/jest-when-xt)
+[![GitHub license](https://img.shields.io/github/license/jonasholtkamp/jest-when-xt.svg)](https://github.com/jonasholtkamp/jest-when-xt/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/jest-when-xt.svg)](https://www.npmjs.com/package/jest-when-xt)
 
-A fork from @timkindberg's [jest-when](https://github.com/timkindberg/jest-when).
+A fork from [@timkindberg](https://github.com/timkindberg/)'s [jest-when](https://github.com/timkindberg/jest-when).
 
 An extended, sugary way to mock return values for specific arguments only
 
@@ -58,7 +60,7 @@ when(fn)
 expect(fn(1)).toEqual('yay!')
 expect(fn(2)).toEqual('nay!')
 ```
-Thanks to @fkloes.
+Thanks to [@fkloes](https://github.com/fkloes).
 
 ```javascript
 when(fn)
@@ -69,6 +71,7 @@ when(fn)
 expect(fn(1)).toEqual('yay!')
 expect(fn(1)).toEqual('nay!')
 ```
+Thanks to [@danielhusar](https://github.com/danielhusar).
 
 #### Supports replacement of mock trainings:
 ```javascript
@@ -81,7 +84,7 @@ expect(fn(1)).toEqual('nay!')
 This replacement of the training does only happen for mock functions _not_ ending in `*Once`.
 Trainings like `mockReturnValueOnce` are removed after a matching function call anyway.
 
-Thanks to @fkloes.
+Thanks to [@fkloes](https://github.com/fkloes).
 
 #### Supports multiple args with partial argument matching:
 ```javascript
@@ -163,6 +166,7 @@ when(fn).expectCalledWith(1).mockReturnValue('x')
 fn(2); // Will throw a helpful jest assertion error with args diff
 ```
 
-### Contributors
-* @timkindberg (original author)
-* @fkloes
+### Contributors (in order of contribution)
+* [@timkindberg](https://github.com/timkindberg/) (original author)
+* [@fkloes](https://github.com/fkloes)
+* [@danielhusar](https://github.com/danielhusar)
