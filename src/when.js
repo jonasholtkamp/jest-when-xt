@@ -1,4 +1,4 @@
-const utils = require('expect/build/jasmine_utils')
+const utils = require('expect/build/jasmineUtils')
 const logger = require('./log')('when')
 
 const checkArgumentMatchers = (assertCall, args) => (match, matcher, i) => {
@@ -33,7 +33,7 @@ class WhenMock {
       this.callMocks = this.callMocks
         .filter((callMock) => once || callMock.once || !utils.equals(callMock.matchers, matchers))
         .concat({ matchers, val, assertCall, once })
-        .sort(({ once }) => !once ? 1 : 0)
+        .sort((a, b) => b.once - a.once)
 
       this.fn.mockImplementation((...args) => {
         logger.debug('mocked impl', args)
