@@ -1,6 +1,6 @@
 {
   "name": "jest-when-xt",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An extension lib for jest",
   "license": "MIT",
   "main": "src/when.js",
