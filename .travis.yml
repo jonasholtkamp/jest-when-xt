@@ -8,11 +8,11 @@ cache:
   - node_modules
 
 before_script:
-- yarn global add codecov
+- npm install --global codecov
 
 script:
-- yarn run standard
-- yarn test
+- npm run standard
+- npm test
 - codecov
 
 deploy:
