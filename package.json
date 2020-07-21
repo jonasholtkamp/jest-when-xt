@@ -17,16 +17,16 @@
     "Jonas Holtkamp <jonas.holtkamp@senacor.com>"
   ],
   "dependencies": {
-    "bunyan": "^1.8.12",
-    "expect": "^24.1.0"
+    "bunyan": "^1.8.14",
+    "expect": "^24.9.0"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^3.0.2",
-    "@stryker-mutator/javascript-mutator": "^3.0.2",
-    "@stryker-mutator/jest-runner": "^3.0.2",
+    "@stryker-mutator/core": "^3.3.1",
+    "@stryker-mutator/javascript-mutator": "^3.3.1",
+    "@stryker-mutator/jest-runner": "^3.3.1",
     "jest": "^24.1.0",
     "pre-commit": "^1.2.2",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "jest": {
     "verbose": false,
