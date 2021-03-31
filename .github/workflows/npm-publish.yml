@@ -19,6 +19,10 @@ jobs:
           check-latest: true
       - run: npm ci
       - run: npm test
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./build/reports/coverage/lcov.info
+          fail_ci_if_error: true
 
   publish-npm:
     if: ${{ github.event == 'release' }}
