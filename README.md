@@ -1,6 +1,6 @@
 # jest-when-xt
 
-[![build status](https://travis-ci.org/jonasholtkamp/jest-when-xt.svg?branch=master)](https://travis-ci.org/jonasholtkamp/jest-when-xt)
+[![Publish NPM package](https://github.com/jonasholtkamp/jest-when-xt/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/jonasholtkamp/jest-when-xt/actions/workflows/npm-publish.yml)
 [![codecov](https://codecov.io/gh/jonasholtkamp/jest-when-xt/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasholtkamp/jest-when-xt)
 [![GitHub license](https://img.shields.io/github/license/jonasholtkamp/jest-when-xt.svg)](https://github.com/jonasholtkamp/jest-when-xt/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/jest-when-xt.svg)](https://www.npmjs.com/package/jest-when-xt)
