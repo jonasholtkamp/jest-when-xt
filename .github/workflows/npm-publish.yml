@@ -8,8 +8,8 @@ on:
   push:
     branches:
       - master
-  release:
-    types: [created]
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
           fail_ci_if_error: true
 
   publish-npm:
-    if: github.event.event_name == 'release'
+    if: github.ref == 'refs/tags/*'
     needs: build
     runs-on: ubuntu-latest
     steps:
