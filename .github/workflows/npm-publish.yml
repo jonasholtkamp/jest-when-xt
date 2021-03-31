@@ -5,6 +5,9 @@ name: Publish NPM package
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
   release:
     types: [created]
 
@@ -25,7 +28,7 @@ jobs:
           fail_ci_if_error: true
 
   publish-npm:
-    if: ${{ github.event == 'release' }}
+    if: github.event.event_name == 'release'
     needs: build
     runs-on: ubuntu-latest
     steps:
