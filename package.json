@@ -24,7 +24,7 @@
     "@stryker-mutator/core": "^3.0.2",
     "@stryker-mutator/javascript-mutator": "^3.0.2",
     "@stryker-mutator/jest-runner": "^3.0.2",
-    "jest": "^24.1.0",
+    "jest": "^26.6.3",
     "pre-commit": "^1.2.2",
     "standard": "^14.3.3"
   },
