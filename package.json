@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "bunyan": "^1.8.12",
-    "expect": "^24.1.0"
+    "expect": "^26.6.2"
   },
   "devDependencies": {
     "@stryker-mutator/core": "^3.0.2",
