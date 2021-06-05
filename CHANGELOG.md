@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.0] - 2021-03-31
+### Changed
+* Upgraded from `jest@24` to `jest@27`. This shouldn't impact you, see _Added_ section
+
+### Added
+* CI matrix execution to test `jest-when-xt` against different versions of Jest and Node.
+Initial supported: Jest versions 24 through 27, Node 12 through 16
+
+## [v0.1.8] - 2021-03-31
+### Security
+* Security patches
+
 ## [v0.1.7] - 2021-03-31
 ### Security
 * Security patches
@@ -61,7 +73,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v0.0.4] - 2018-05-24
 ### Initial release after forking
 
-[Unreleased]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.8...v0.2.0
+[0.1.8]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.7...v0.1.8
+[0.1.7]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/jonasholtkamp/jest-when-xt/compare/v0.1.0...v0.1.1
