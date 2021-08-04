@@ -21,8 +21,8 @@
     "expect": "^27.0.6"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^5.2.1",
-    "@stryker-mutator/jest-runner": "^5.2.1",
+    "@stryker-mutator/core": "^5.2.2",
+    "@stryker-mutator/jest-runner": "^5.2.2",
     "jest": "^27.0.6",
     "pre-commit": "^1.2.2",
     "standard": "^16.0.3"
